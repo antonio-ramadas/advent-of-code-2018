@@ -7,6 +7,7 @@
 #include <string>
 #include <map>
 #include <algorithm>
+#include <list>
 
 using namespace std;
 
@@ -46,10 +47,48 @@ void partOne() {
     cout << "Solution to part one = " << exactlyTwo * exactlyThree << endl;
 }
 
+void partTwo() {
+    ifstream fin("input");
+
+    string currId, solution;
+    list<string> l;
+
+    while (getline(fin, currId)) {
+       for (const string &id : l) {
+           // Currently, a solution is constantly built (which may be expensive)
+           // Another solution would be to use a flag to mark compatible IDs and only then build the string
+           solution = "";
+
+           // I am assuming here that a missing character is not the same as having one different character
+           // For example, should `abc` and `abcd` count?
+           if (id.size() != currId.size()) {
+               continue;
+           }
+
+           for (unsigned int i = 0; i < currId.size(); i++) {
+               if (currId.at(i) == id.at(i)) {
+                   solution += currId.at(i);
+               }
+           }
+
+           if (solution.size() == currId.size() - 1) {
+               cout << "Solution to part two = " << solution << endl;
+               fin.close();
+               return;
+           }
+       }
+
+       l.push_back(currId);
+    }
+
+    fin.close();
+}
+
 int main() {
     cout << "--- Inventory Management System ---" << endl;
 
     partOne();
+    partTwo();
 
     return 0;
 }
