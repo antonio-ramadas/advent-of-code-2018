@@ -1,62 +1,47 @@
-# --- Day 3: No Matter How You Slice It ---
+# --- Day 2: Inventory Management System ---
 
-The Elves managed to locate the chimney-squeeze prototype fabric for Santa's suit (thanks to someone who helpfully wrote its box IDs on the wall of the warehouse in the middle of the night). Unfortunately, anomalies are still affecting them - nobody can even agree on how to _cut_ the fabric.
+You stop falling through time, catch your breath, and check the screen on the device. "Destination reached. Current Year: 1518. Current Location: North Pole Utility Closet 83N10." You made it! Now, to find those anomalies.
 
-The whole piece of fabric they're working on is a very large square - at least `1000` inches on each side.
+Outside the utility closet, you hear footsteps and a voice. "...I'm not sure either. But now that so many people have chimneys, maybe he could sneak in that way?" Another voice responds, "Actually, we've been working on a new kind of _suit_ that would let him fit through tight spaces like that. But, I heard that a few days ago, they lost the prototype fabric, the design plans, everything! Nobody on the team can even seem to remember important details of the project!"
 
-Each Elf has made a _claim_ about which area of fabric would be ideal for Santa's suit. All claims have an ID and consist of a single rectangle with edges parallel to the edges of the fabric. Each claim's rectangle is defined as follows:
+"Wouldn't they have had enough fabric to fill several boxes in the warehouse? They'd be stored together, so the box IDs should be similar. Too bad it would take forever to search the warehouse for _two similar box IDs_..." They walk too far away to hear any more.
 
- - The number of inches between the left edge of the fabric and the left edge of the rectangle.
- - The number of inches between the top edge of the fabric and the top edge of the rectangle.
- - The width of the rectangle in inches.
- - The height of the rectangle in inches.
- - A claim like `#123 @ 3,2: 5x4` means that claim ID `123` specifies a rectangle `3` inches from the left edge, `2` inches from the top edge, `5` inches wide, and `4` inches tall. Visually, it claims the square inches of fabric represented by `#` (and ignores the square inches of fabric represented by `.`) in the diagram below:
+Late at night, you sneak to the warehouse - who knows what kinds of paradoxes you could cause if you were discovered - and use your fancy wrist device to quickly scan every box and produce a list of the likely candidates (your puzzle input).
 
-```
-...........
-...........
-...#####...
-...#####...
-...#####...
-...#####...
-...........
-...........
-...........
-```
+To make sure you didn't miss any, you scan the likely candidate boxes again, counting the number that have an ID containing _exactly two of any letter_ and then separately counting those with _exactly three of any letter_. You can multiply those two counts together to get a rudimentary [checksum](https://en.wikipedia.org/wiki/Checksum) and compare it to what your device predicts.
 
-The problem is that many of the claims _overlap_, causing two or more claims to cover part of the same areas. For example, consider the following claims:
+For example, if you see the following box IDs:
 
-```
-#1 @ 1,3: 4x4
-#2 @ 3,1: 4x4
-#3 @ 5,5: 2x2
-```
+ - `abcdef` contains no letters that appear exactly two or three times.
+ - `bababc` contains two `a` and three `b`, so it counts for both.
+ - `abbcde` contains two `b`, but no letter appears exactly three times.
+ - `abcccd` contains three `c`, but no letter appears exactly two times.
+ - `aabcdd` contains two `a` and two `d`, but it only counts once.
+ - `abcdee` contains two `e`.
+ - `ababab` contains three `a` and three `b`, but it only counts once.
 
-Visually, these claim the following areas:
-```
-........
-...2222.
-...2222.
-.11XX22.
-.11XX22.
-.111133.
-.111133.
-........
-```
+Of these box IDs, four of them contain a letter which appears exactly twice, and three of them contain a letter which appears exactly three times. Multiplying these together produces a checksum of `4 * 3 = 12`.
 
-The four square inches marked with X are claimed by _both `1` and `2`_. (Claim `3`, while adjacent to the others, does not overlap either of them.)
-
-If the Elves all proceed with their own plans, none of them will have enough fabric. _How many square inches of fabric are within two or more claims?_
+_What is the checksum_ for your list of box IDs?
 
 To begin, [get your puzzle input](input).
 
 ## --- Part Two ---
 
-Amidst the chaos, you notice that exactly one claim doesn't overlap by even a single square inch of fabric with any other claim. If you can somehow draw attention to it, maybe the Elves will be able to make Santa's suit after all!
+Confident that your list of box IDs is complete, you're ready to find the boxes full of prototype fabric.
 
-For example, in the claims above, only claim `3` is intact after all claims are made.
+The boxes will have IDs which differ by exactly one character at the same position in both strings. For example, given the following box IDs:
 
-_What is the ID of the only claim that doesn't overlap?_
+ - `abcde`
+ - `fghij`
+ - `klmno`
+ - `pqrst`
+ - `fguij`
+ - `axcye`
+ - `wvxyz`
+
+The IDs `abcde` and `axcye` are close, but they differ by two characters (the second and fourth). However, the IDs `fghij` and `fguij` differ by exactly one character, the third (`h` and `u`). Those must be the correct boxes.
+
+_What letters are common between the two correct box IDs?_ (In the example above, this is found by removing the differing character from either ID, producing `fgij`.)
 
 Although it hasn't changed, you can still [get your puzzle input](input).
-
