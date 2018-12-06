@@ -63,10 +63,45 @@ void partOne() {
     cout << "Solution to part one = " << *max_element(count.begin(), count.end()) << endl;
 }
 
+void partTwo() {
+    int x, y, maxX = -1, maxY = -1;
+    char ignore;
+    vector<pair<int, int> > coordinates;
+
+    ifstream fin("input");
+    while (fin >> x >> ignore >> y) {
+        coordinates.emplace_back(x, y);
+        maxX = max(maxX, x);
+        maxY = max(maxY, y);
+    }
+    fin.close();
+
+    pair<int, int> currentCoordinates;
+    int sizeOfSafeRegion = 0, distance = 0;
+
+    for (y = 0; y <= maxY; y++) {
+        for (x = 0; x <= maxX; x++) {
+            currentCoordinates = make_pair(x, y);
+            distance = 0;
+
+            for (const auto &coordinate : coordinates) {
+                distance += manhattamDistance(currentCoordinates, coordinate);
+            }
+
+            if (distance < 10000) {
+                sizeOfSafeRegion++;
+            }
+        }
+    }
+
+    cout << "Solution to part two = " << sizeOfSafeRegion << endl;
+}
+
 int main() {
     cout << "--- Chronal Coordinates ---" << endl;
 
     partOne();
+    partTwo();
 
     return 0;
 }
