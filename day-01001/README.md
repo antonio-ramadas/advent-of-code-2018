@@ -144,3 +144,11 @@ After `3` seconds, the message appeared briefly: _HI_. Of course, your message w
 _What message will eventually appear in the sky?_
 
 To begin, [get your puzzle input](input).
+
+## --- Part Two ---
+
+Good thing you didn't have to wait, because that would have taken a long time - much longer than the _`3`_ seconds in the example above.
+
+Impressed by your sub-hour communication capabilities, the Elves are curious: _exactly how many seconds would they have needed to wait for that message to appear_?
+
+Although it hasn't changed, you can still [get your puzzle input](input).

@@ -118,10 +118,8 @@ void partOne() {
 int main() {
     cout << "--- The Stars Align ---" << endl;
 
-    cout << "Solution to part one = " << endl;
+    cout << "Solution to part one and two = " << endl;
     partOne();
-
-    // cout << "Solution to part two = " << partOne(nPlayers, nMarbles * 100) << endl;
 
     return 0;
 }
