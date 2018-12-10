@@ -35,6 +35,7 @@ public:
     vector<vector<bool> > getSkyAt(int seconds) {
         list<pair<int, int> > stars;
         pair<int, int> coord;
+
         pair<int, int> height = make_pair(INT_MAX, INT_MIN);
         pair<int, int> width = make_pair(INT_MAX, INT_MIN);
 
@@ -59,15 +60,22 @@ public:
         return sky;
     }
 
-    void printSkyAt(int seconds) {
-        vector<vector<bool> > sky = getSkyAt(seconds);
+    bool shouldPrint(const vector<vector<bool> > &newSky) {
+        int slack = 20;
 
+        bool height = newSky.size() < (starCoordinates.size() + slack);
+        bool width = newSky.at(0).size() < (starCoordinates.size() + slack);
+
+        return height && width;
+    }
+
+    void printSky(const vector<vector<bool> > &sky) {
         for (const vector<bool> &row : sky) {
             for (const bool &coord : row) {
                 if (coord) {
                     cout << "#";
                 } else {
-                    cout << " ";
+                    cout << ".";
                 }
             }
 
@@ -89,10 +97,19 @@ void partOne() {
     }
     fin.close();
 
-    for (int i = 0; i < 100; i++) {
+    vector<vector<bool> > iterSky;
+
+    // The solution is at 10867
+    for (int i = 10865; i < 10870; i++) {
         cout << "After " << i << " seconds:" << endl;
-        sky.printSkyAt(i);
-        this_thread::sleep_for(std::chrono::milliseconds(500));
+
+        iterSky = sky.getSkyAt(i);
+
+        if (sky.shouldPrint(iterSky)) {
+            sky.printSky(iterSky);
+            this_thread::sleep_for(chrono::milliseconds(500));
+        }
+
         cout << endl << endl;
     }
 
