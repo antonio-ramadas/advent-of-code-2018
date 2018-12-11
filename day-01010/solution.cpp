@@ -58,10 +58,64 @@ void partOne() {
     cout << "Solution to part one = " << coordinates.first << "," << coordinates.second << endl;
 }
 
+void partTwo() {
+    vector<vector<int> > grid(GRID_SIZE + 1, vector<int>(GRID_SIZE + 1, UNVISITED_CELL));
+    vector<vector<int> > columnSum(GRID_SIZE + 1, vector<int>(GRID_SIZE + 1, 0));
+    pair<int, int> coordinates;
+    int maxPower = INT_MIN, bestWindowSize = 1;
+
+    // Get power for each individual cell
+    for (int y = 1; y <= GRID_SIZE; y++) {
+        for (int x = 1; x <= GRID_SIZE; x++) {
+            grid.at(y).at(x) = getPowerAt(grid, x, y);
+        }
+    }
+
+    // For each possible size of the window
+    for (int windowSize = 1; windowSize <= GRID_SIZE; windowSize++) {
+
+        // Fill the columns
+        for (int y = 1; y <= GRID_SIZE - windowSize + 1; y++) {
+            for (int x = 1; x <= GRID_SIZE; x++) {
+                columnSum.at(y).at(x) += grid.at(y + windowSize - 1).at(x);
+            }
+        }
+
+        // Fill the rows
+        for (int y = 1; y <= GRID_SIZE - windowSize + 1; y++) {
+
+            int sum = 0;
+
+            for (int x = 1; x <= windowSize; x++) {
+                sum += columnSum.at(y).at(x);
+            }
+
+            if (sum > maxPower) {
+                maxPower = sum;
+                coordinates = make_pair(1, y);
+                bestWindowSize = windowSize;
+            }
+
+            for (int x = 2; x <= GRID_SIZE - windowSize + 1; x++) {
+                sum += columnSum.at(y).at(x + windowSize - 1) - columnSum.at(y).at(x-1);
+
+                if (sum > maxPower) {
+                    maxPower = sum;
+                    coordinates = make_pair(x, y);
+                    bestWindowSize = windowSize;
+                }
+            }
+        }
+    }
+
+    cout << "Solution to part two = " << coordinates.first << "," << coordinates.second << "," << bestWindowSize << endl;
+}
+
 int main() {
     cout << "--- Chronal Charge ---" << endl;
 
     partOne();
+    partTwo();
 
     return 0;
 }
