@@ -71,6 +71,8 @@ void partTwo() {
         }
     }
 
+    // Adapted from: https://www.geeksforgeeks.org/given-n-x-n-square-matrix-find-sum-sub-squares-size-k-x-k/
+
     // For each possible size of the window
     for (int windowSize = 1; windowSize <= GRID_SIZE; windowSize++) {
 
