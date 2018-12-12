@@ -68,3 +68,11 @@ In this example, after 20 generations, the pots shown as `#` contain plants, the
 _After 20 generations, what is the sum of the numbers of all pots which contain a plant?_
 
 To begin, [get your puzzle input](input).
+
+# --- Part Two ---
+
+You realize that 20 generations aren't enough. After all, these plants will need to last another 1500 years to even reach your timeline, not to mention your future.
+
+_After fifty billion (`50000000000`) generations, what is the sum of the numbers of all pots which contain a plant?_
+
+Although it hasn't changed, you can still [get your puzzle input](input).

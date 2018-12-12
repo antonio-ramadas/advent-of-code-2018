@@ -58,3 +58,18 @@ For grid serial number `42`, the largest 3x3 square's top-left is _`21,61`_ (wit
 _What is the `X,Y` coordinate of the top-left fuel cell of the 3x3 square with the largest total power?_
 
 Your puzzle input is _`5153`_.
+
+## --- Part Two ---
+
+You discover a dial on the side of the device; it seems to let you select a square of _any size_, not just 3x3. Sizes from 1x1 to 300x300 are supported.
+
+Realizing this, you now must find the _square of any size with the largest total power_. Identify this square by including its size as a third parameter after the top-left coordinate: a 9x9 square with a top-left corner of `3,5` is identified as `3,5,9`.
+
+For example:
+
+ - For grid serial number `18`, the largest total square (with a total power of `113`) is 16x16 and has a top-left corner of `90,269`, so its identifier is _`90,269,16`_.
+ - For grid serial number `42`, the largest total square (with a total power of `119`) is 12x12 and has a top-left corner of `232,251`, so its identifier is _`232,251,12`_.
+
+_What is the `X,Y,size` identifier of the square with the largest total power?_
+
+Your puzzle input is still _`5153`_.

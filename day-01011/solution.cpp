@@ -26,17 +26,36 @@ void partOne() {
     fin.close();
 
     // Create useful variables
-    list<char> generation(state.begin(), state.end());
-    long nPots = count(generation.begin(), generation.end(), '#');
-    list<char>::iterator initialState = generation.begin();
+    string newState, window;
+    int potNumber = 0;
 
     for (int generationNumber = 1; generationNumber <= NUMBER_OF_GENERATIONS; generationNumber++) {
-        // Go to the right
+        newState = "";
+        state = "....." + state + ".....";
+        window = "....."; //state.substr(0, 5);
+        potNumber -= 3;
 
-        // Go to the left
+        for (unsigned int i = 0; i < state.size() - window.size(); i++) {
+            window.erase(window.begin());
+            window += state.at(i + window.size());
 
+            if (patterns.find(window) != patterns.end()) {
+                newState += '#';
+            } else {
+                newState += '.';
+            }
+        }
 
-        nPots += count(generation.begin(), generation.end(), '#');
+        // newState.erase(0, newState.find_first_not_of('.'));       //prefixing spaces
+        // newState.erase(newState.find_last_not_of('.')+1);
+
+        state = newState;
+    }
+
+    int nPots = 0;
+    for (int i = 0; i < newState.size(); i++) {
+        if (newState.at(i) == '#')
+            nPots += potNumber + i;
     }
 
     cout << "Solution to part one = " << nPots << endl;
