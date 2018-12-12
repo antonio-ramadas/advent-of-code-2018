@@ -99,6 +99,9 @@ void partOne() {
 
     vector<vector<bool> > iterSky;
 
+    // Could also been solved using binary search assuming the solution is at the second
+    //      where the distance between the most distant stars is minimum
+
     // The solution is at 10867
     for (int i = 10865; i < 10870; i++) {
         cout << "After " << i << " seconds:" << endl;
