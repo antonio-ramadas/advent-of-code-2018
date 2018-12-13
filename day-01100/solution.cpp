@@ -347,27 +347,56 @@ public:
         }
     }
 
-    bool tick(pair<int, int> &crashCoordinates) {
-        set<Cart> tmpCarts = carts;
+    bool tickPartOne(pair<int, int> &crashCoordinates) {
         set<Cart> newCarts;
 
-        for (const Cart &cart : carts) {
-            Cart newCart = cart;
+        while(!carts.empty()) {
+            Cart newCart = *carts.begin();
+            carts.erase(carts.begin());
             pair<int, int> cartCoordinates = newCart.getCoordinates();
 
             newCart.updateDirection(crop.at(cartCoordinates.first).at(cartCoordinates.second));
 
             newCart.move();
 
-            tmpCarts.erase(cart);
-
             // If it crashes with any of the previous ones or the ones that already moved...
-            if (tmpCarts.find(newCart) != tmpCarts.end() || newCarts.find(newCart) != newCarts.end()) {
+            if (carts.find(newCart) != carts.end() || newCarts.find(newCart) != newCarts.end()) {
                 crashCoordinates = newCart.getCoordinates();
                 return false;
             }
 
             newCarts.insert(newCart);
+        }
+
+        carts = newCarts;
+        return true;
+    }
+
+    bool tickPartTwo(pair<int, int> &lastCartCoordinates) {
+        set<Cart> newCarts;
+
+        while (!carts.empty()) {
+            Cart newCart = *carts.begin();
+            carts.erase(carts.begin());
+
+            pair<int, int> cartCoordinates = newCart.getCoordinates();
+
+            newCart.updateDirection(crop.at(cartCoordinates.first).at(cartCoordinates.second));
+
+            newCart.move();
+
+            if (carts.find(newCart) != carts.end()) {
+                carts.erase(newCart);
+            } else if (newCarts.find(newCart) != newCarts.end()) {
+                newCarts.erase(newCart);
+            } else {
+                newCarts.insert(newCart);
+            }
+        }
+
+        if (newCarts.size() == 1) {
+            lastCartCoordinates = newCarts.begin()->getCoordinates();
+            return false;
         }
 
         carts = newCarts;
@@ -390,16 +419,36 @@ void partOne() {
 
     pair<int, int> crashCoordinates;
 
-    while (crop.tick(crashCoordinates));
+    while (crop.tickPartOne(crashCoordinates));
 
     cout << "Solution to part one = " << crashCoordinates.second << "," << crashCoordinates.first << endl;
+}
+
+void partTwo() {
+    Crop crop;
+    string row;
+
+    // Read
+    ifstream fin("input");
+    while (getline(fin, row)) {
+        crop.addRow(row);
+    }
+    fin.close();
+
+    crop.cleanCrop();
+
+    pair<int, int> lastCartCoordinates;
+
+    while (crop.tickPartTwo(lastCartCoordinates));
+
+    cout << "Solution to part two = " << lastCartCoordinates.second << "," << lastCartCoordinates.first << endl;
 }
 
 int main() {
     cout << "--- Mine Cart Madness ---" << endl;
 
     partOne();
-    // partTwo();
+    partTwo();
 
     return 0;
 }
