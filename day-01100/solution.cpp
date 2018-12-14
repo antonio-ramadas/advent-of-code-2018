@@ -447,6 +447,7 @@ void partTwo() {
 int main() {
     cout << "--- Mine Cart Madness ---" << endl;
 
+    // This whole file is what happens when you misread the assignment... :'(
     partOne();
     partTwo();
 
