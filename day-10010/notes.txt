@@ -1,0 +1,37 @@
+[1, 0, 0, 0, 0, 0]
+0: reg2 += 16
+1: reg1 = 1
+2: reg3 = 1
+3: reg5 = reg1 * reg3
+4: reg5 = reg5 == reg4
+5: reg2 += reg5
+6: reg2 += 1
+7: reg0 += reg1
+8: reg3 += 1
+9: reg5 = reg3 > reg4
+10: reg2 += reg5
+11: reg2 = 2
+12: reg1 += 1
+13: reg5 = reg1 > reg4
+14: reg2 += reg5
+15: reg2 = 1
+16: reg2 *= reg2
+17: reg4 += 2
+18: reg4 *= reg4
+19: reg4 *= reg2
+20: reg4 *= 11
+21: reg5 += 1
+22: reg5 *= reg2
+23: reg5 += 17
+24: reg4 += reg5
+25: reg2 += reg0
+26: reg2 = 0
+27: reg5 = reg2
+28: reg5 *= reg2
+29: reg5 += reg2
+30: reg5 *= reg2
+31: reg5 *= 14
+32: reg5 *= reg2
+33: reg4 += reg5
+34: reg0 = 0
+35: reg2 = 0
