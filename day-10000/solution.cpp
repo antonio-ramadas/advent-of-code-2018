@@ -20,7 +20,7 @@ coordinates operator+(const coordinates &lhs, const coordinates &rhs) {
 
 class Reservoir {
 private:
-    vector<string> reservoir, old;
+    vector<string> reservoir;
     coordinates springOfWater = make_pair(0, 500);
 
     bool boundedCoordinate(const coordinates &currentCoordinates) {
@@ -136,8 +136,6 @@ public:
         }
 
         fin.close();
-
-        old = reservoir;
     }
 
     void print() {
