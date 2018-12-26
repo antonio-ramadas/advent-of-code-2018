@@ -182,7 +182,7 @@ vector<operationBind> getInstructions(ifstream &fin) {
     int A, B, C;
 
     while (fin >> operation >> A >> B >> C) {
-        instructions.push_back(bind(functions[operation], _1, A, B, C));
+        instructions.push_back(bind(functions[operation], placeholders::_1, A, B, C));
     }
 
     return instructions;
