@@ -10,6 +10,7 @@
 #include <numeric>
 #include <stack>
 #include <unordered_map>
+#include <unordered_set>
 #include <iomanip>
 
 using namespace std;
@@ -317,8 +318,7 @@ void partTwo() {
     // The code commented bellow is the instructions turned into C++ code
     // This helps debug. It was not necessary, but it was fun :)
 
-    set<int> mem, newSequence;
-    bool foundRepetitiveNumberBefore = false;
+    unordered_set<int> mem;
     bool loop = true;
 
     // [0, 2]
@@ -362,25 +362,12 @@ void partTwo() {
 
             loop = true;
 
-            if (foundRepetitiveNumberBefore || mem.find(registers.at(3)) != mem.end()) {
-                foundRepetitiveNumberBefore = true;
-
-                if (newSequence.find(registers.at(3)) != newSequence.end() && mem.find(registers.at(3)) == mem.end()) {
-                    lowestInteger = *newSequence.begin();
-                    break;
-                }
-                if (foundRepetitiveNumberBefore) {
-                    lowestInteger = *mem.begin();
-                    break;
-                } else {
-                    foundRepetitiveNumberBefore = true;
-                    mem.clear();
-                }
+            if (mem.find(registers.at(3)) != mem.end()) {
+                break;
             }
 
             mem.insert(registers.at(3));
-
-            cout << mem.size() << " " << registers.at(3) << endl;
+            lowestInteger = registers.at(3);
 
             if (registers.at(5) == 1) {
                 // Finished
