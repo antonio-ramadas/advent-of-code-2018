@@ -23,3 +23,11 @@ Because time travel is a dangerous activity, the activation system begins with a
 _What is the lowest non-negative integer value for register 0 that causes the program to halt after executing the fewest instructions?_ (Executing the same instruction multiple times counts as multiple instructions executed.)
 
 To begin, [get your puzzle input](input).
+
+## --- Part Two ---
+
+In order to determine the timing window for your underflow exploit, you also need an upper bound:
+
+_What is the lowest non-negative integer value for register `0` that causes the program to halt after executing the most instructions?_ (The program must actually halt; running forever does not count as halting.)
+
+Although it hasn't changed, you can still [get your puzzle input](input).

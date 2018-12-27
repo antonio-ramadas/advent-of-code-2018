@@ -200,20 +200,20 @@ void partOne() {
     instructions = getInstructions(fin);
     fin.close();
 
-    int lowestInteger = 21;
+    int lowestInteger = 7967233;
     registers.at(0) = lowestInteger;
 
-    /*for (; registers.at(ipIndex) >= 0 && registers.at(ipIndex) < instructions.size(); registers.at(ipIndex)++) {
+    for (; registers.at(ipIndex) >= 0 && registers.at(ipIndex) < instructions.size(); registers.at(ipIndex)++) {
         instructions.at(registers.at(ipIndex))(registers);
-    }*/
+    }
 
+    // The code commented bellow is the instructions turned into C++ code
+    // This helps debug. It was not necessary, but it was fun :)
 
-    ////////////////////////
-
-    bool loop = true;
+    /*bool loop = true;
 
     // [0, 2]
-    registers.at(3) = ((123 & 456) == 72) ? 1 : 0;
+    registers.at(3) = ((123 & 456) == 72) ? 1 : 0; // 1
 
     // Skips 4, because registers.at(3) == 1
 
@@ -227,6 +227,7 @@ void partOne() {
         // 7
         registers.at(3) = 10373714;
 
+        jump:
         // 8
         registers.at(5) = registers.at(1) & 255;
 
@@ -249,44 +250,178 @@ void partOne() {
         if (registers.at(5) == 1) {
             // 28
             registers.at(5) = (registers.at(3) == registers.at(0)) ? 1 : 0;
-        }
 
-        loop = registers.at(5) == 0;
+            loop = true;
+
+            if (registers.at(5) == 1) {
+                // Finished
+                break;
+            }
+        } else {
+            loop = false;
+        }
 
     } while (loop);
 
-    // Finished
+    // Finished?
+    if (!loop) {
 
-    // 17
-    registers.at(5) = 0;
+        // 17
+        registers.at(5) = 0;
 
-    do {
-        // [18, 19]
-        registers.at(4) = (registers.at(5) + 1) * 256;
+        do {
+            // [18, 19]
+            registers.at(4) = (registers.at(5) + 1) * 256;
 
-        // 20
-        registers.at(4) = (registers.at(4) > registers.at(1)) ? 1 : 0;
+            // 20
+            registers.at(4) = (registers.at(4) > registers.at(1)) ? 1 : 0;
 
-        // [21, 22]
-        if (registers.at(4) == 1) {
-            // 26
-            registers.at(1) = registers.at(5);
+            // [21, 22]
+            if (registers.at(4) == 1) {
+                // 26
+                registers.at(1) = registers.at(5);
 
-            // go to line 8
-        } else {
-            // 24
-            registers.at(5) += 1;
-        }
+                // go to instruction 8
+                goto jump;
+            } else {
+                // 24
+                registers.at(5) += 1;
+            }
 
-        // 25
-    } while (true);
-
+            // 25
+        } while (true);
+    }*/
 
     cout << "Solution to part one = " << lowestInteger << endl;
 }
 
 void partTwo() {
-    cout << "Solution to part two = " << endl;
+    vector<int> registers(6, 0);
+    int ipIndex;
+    vector<operationBind> instructions;
+
+    ifstream fin("input");
+
+    fin.ignore(1000, ' ');
+    fin >> ipIndex;
+    instructions = getInstructions(fin);
+    fin.close();
+
+    int lowestInteger = 7967234;
+    registers.at(0) = lowestInteger;
+
+    /*for (; registers.at(ipIndex) >= 0 && registers.at(ipIndex) < instructions.size(); registers.at(ipIndex)++) {
+        instructions.at(registers.at(ipIndex))(registers);
+    }*/
+
+    // The code commented bellow is the instructions turned into C++ code
+    // This helps debug. It was not necessary, but it was fun :)
+
+    set<int> mem, newSequence;
+    bool foundRepetitiveNumberBefore = false;
+    bool loop = true;
+
+    // [0, 2]
+    registers.at(3) = ((123 & 456) == 72) ? 1 : 0; // 1
+
+    // Skips 4, because registers.at(3) == 1
+
+    // 5
+    registers.at(3) = 0;
+
+    do {
+        // 6
+        registers.at(1) = registers.at(3) | 65536;
+
+        // 7
+        registers.at(3) = 10373714;
+
+        jump:
+        // 8
+        registers.at(5) = registers.at(1) & 255;
+
+        // 9
+        registers.at(3) += registers.at(5);
+
+        // 10
+        registers.at(3) &= 16777215;
+
+        // 11
+        registers.at(3) *= 65899;
+
+        // 12
+        registers.at(3) &= 16777215;
+
+        // 13
+        registers.at(5) = (256 > registers.at(1)) ? 1 : 0;
+
+        // [14, 15]
+        if (registers.at(5) == 1) {
+            // 28
+            registers.at(5) = (registers.at(3) == registers.at(0)) ? 1 : 0;
+
+            loop = true;
+
+            if (foundRepetitiveNumberBefore || mem.find(registers.at(3)) != mem.end()) {
+                foundRepetitiveNumberBefore = true;
+
+                if (newSequence.find(registers.at(3)) != newSequence.end() && mem.find(registers.at(3)) == mem.end()) {
+                    lowestInteger = *newSequence.begin();
+                    break;
+                }
+                if (foundRepetitiveNumberBefore) {
+                    lowestInteger = *mem.begin();
+                    break;
+                } else {
+                    foundRepetitiveNumberBefore = true;
+                    mem.clear();
+                }
+            }
+
+            mem.insert(registers.at(3));
+
+            cout << mem.size() << " " << registers.at(3) << endl;
+
+            if (registers.at(5) == 1) {
+                // Finished
+                // break;
+            }
+        } else {
+            loop = false;
+        }
+
+    } while (loop);
+
+    // Finished?
+    if (!loop) {
+
+        // 17
+        registers.at(5) = 0;
+
+        do {
+            // [18, 19]
+            registers.at(4) = (registers.at(5) + 1) * 256;
+
+            // 20
+            registers.at(4) = (registers.at(4) > registers.at(1)) ? 1 : 0;
+
+            // [21, 22]
+            if (registers.at(4) == 1) {
+                // 26
+                registers.at(1) = registers.at(5);
+
+                // go to instruction 8
+                goto jump;
+            } else {
+                // 24
+                registers.at(5) += 1;
+            }
+
+            // 25
+        } while (true);
+    }
+
+    cout << "Solution to part two = " << lowestInteger << endl;
 }
 
 int main() {
