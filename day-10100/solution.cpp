@@ -203,9 +203,84 @@ void partOne() {
     int lowestInteger = 21;
     registers.at(0) = lowestInteger;
 
-    for (; registers.at(ipIndex) >= 0 && registers.at(ipIndex) < instructions.size(); registers.at(ipIndex)++) {
+    /*for (; registers.at(ipIndex) >= 0 && registers.at(ipIndex) < instructions.size(); registers.at(ipIndex)++) {
         instructions.at(registers.at(ipIndex))(registers);
-    }
+    }*/
+
+
+    ////////////////////////
+
+    bool loop = true;
+
+    // [0, 2]
+    registers.at(3) = ((123 & 456) == 72) ? 1 : 0;
+
+    // Skips 4, because registers.at(3) == 1
+
+    // 5
+    registers.at(3) = 0;
+
+    do {
+        // 6
+        registers.at(1) = registers.at(3) | 65536;
+
+        // 7
+        registers.at(3) = 10373714;
+
+        // 8
+        registers.at(5) = registers.at(1) & 255;
+
+        // 9
+        registers.at(3) += registers.at(5);
+
+        // 10
+        registers.at(3) &= 16777215;
+
+        // 11
+        registers.at(3) *= 65899;
+
+        // 12
+        registers.at(3) &= 16777215;
+
+        // 13
+        registers.at(5) = (256 > registers.at(1)) ? 1 : 0;
+
+        // [14, 15]
+        if (registers.at(5) == 1) {
+            // 28
+            registers.at(5) = (registers.at(3) == registers.at(0)) ? 1 : 0;
+        }
+
+        loop = registers.at(5) == 0;
+
+    } while (loop);
+
+    // Finished
+
+    // 17
+    registers.at(5) = 0;
+
+    do {
+        // [18, 19]
+        registers.at(4) = (registers.at(5) + 1) * 256;
+
+        // 20
+        registers.at(4) = (registers.at(4) > registers.at(1)) ? 1 : 0;
+
+        // [21, 22]
+        if (registers.at(4) == 1) {
+            // 26
+            registers.at(1) = registers.at(5);
+
+            // go to line 8
+        } else {
+            // 24
+            registers.at(5) += 1;
+        }
+
+        // 25
+    } while (true);
+
 
     cout << "Solution to part one = " << lowestInteger << endl;
 }
